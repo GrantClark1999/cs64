@@ -186,5 +186,41 @@ doSwap:
 
         # TODO: fill in the code
 
+        # unsigned int x = 0 ($t0)
+        # unsigned int y = 8 ($t1)
+        move $t0, $zero
+        li $t1, 8
+
+        # Save return address in $t7 before loop
+        move $t7, $ra
+        jal loop
+
+        # Re-make $ra the correct return address
+        move $ra, $t7
+
         # do not remove this last line
+        jr $ra
+
+loop:
+        la $t3, myArray         # $t3 = address of start of array
+        sll $t4, $t0, 2         # $t4 = $t0 * 4 = x * 4 (offset1)
+        addu $t5, $t3, $t4      # $t5 = original address + offset1
+        sll $t4, $t1, 2         # $t4 = $t1 * 4 = y * 4 (offset2)
+        addu $t6, $t3, $t4      # $t6 = original address + offset2
+
+        lw $t4, 0($t5)          # temp = myArray[x]
+        sw 0($t6), 0($t5)       # myArray[x] = myArray[y]
+        sw $t4, 0($t6)          # myArray[y] = temp
+
+        # Increment x
+        addi $t0, $t0, 1
+
+        # Decrement y
+        addi $t1, $t1, -1
+
+        # Stop condition value
+        li $t6, 4
+        # If x != 4, continue looping
+        bne $t0, $t6, loop
+        # If x == 4, return to place of function call
         jr $ra
