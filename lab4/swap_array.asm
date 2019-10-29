@@ -208,9 +208,10 @@ loop:
         sll $t4, $t1, 2         # $t4 = $t1 * 4 = y * 4 (offset2)
         addu $t6, $t3, $t4      # $t6 = original address + offset2
 
-        lw $t4, 0($t5)          # temp = myArray[x]
-        sw 0($t6), 0($t5)       # myArray[x] = myArray[y]
-        sw $t4, 0($t6)          # myArray[y] = temp
+        lw $t4, 0($t5)          # temp1 = myArray[x]
+        lw $t2, 0($t6)          # temp2 = myArray[y]
+        sw $t2, 0($t5)          # myArray[x] = temp2
+        sw $t4, 0($t6)          # myArray[y] = temp1
 
         # Increment x
         addi $t0, $t0, 1
