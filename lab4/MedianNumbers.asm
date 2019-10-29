@@ -10,7 +10,7 @@
 #Text Area (i.e. instructions)
 .text
 main:
-	# Get first number
+	# Get first number (a) -> $t0
 	li $v0, 4
 	la $a0, requestInput
 	syscall
@@ -19,7 +19,7 @@ main:
 	syscall
 	move $t0, $v0
 
-	# Get second number
+	# Get second number (b) -> $t1
 	li $v0, 4
 	la $a0, requestInput
 	syscall
@@ -28,7 +28,7 @@ main:
 	syscall
 	move $t1, $v0
 
-	# Get third number
+	# Get third number (c) -> $t2
 	li $v0, 4
 	la $a0, requestInput
 	syscall
@@ -37,34 +37,40 @@ main:
 	syscall
 	move $t2, $v0
 
-findMaxOfFirstTwo:
-	# Find max($t0, $t1) and store in $t7
-	slt $t3, $t0, $t1
-	bne $t3, $zero, setMaxOfFirstTwo
+	# Store x = (a-b) -> $s0
+	sub $s0, $t0, $t1
 
-findMinOfMaxAndLast:
-	# Find min($t7, $t2) and store in $t7
-	move $t3, $zero
-	slt $t3, $t2, $t0
-	bne $t3, $zero, setMinOfMaxAndLast
+	# Store y = (b-c) -> $s1
+	sub $s1, $t1, $t2
 
-findMaxFinal:
-	# Find max($t7, $t0) and store in $t7
-	move $t3, $zero
-	slt $t3, $t7, $t0
-	bne $t3, $zero, setMaxFinal
+	# Store z = (a-c) -> $s2
+	sub $s2, $t0, $t2
+
+	# If x * y > 0, b is the median
+	mult $s0, $s1
+	mflo $t3
+	slt $s3, $zero, $t3
+	bne $s3, $zero, setSecondAsMedian
+
+	# If x * z > 0, c is the median
+	mult $s0, $s2
+	mflo $t3
+	slt $s3, $zero, $t3
+	bne $s3, $zero, setThirdAsMedian
+
+	# Else, a is the median
+
+setFirstAsMedian:
+	move $t9, $t0
 	j print
 
-setMaxOfFirstTwo:
-	move $t7, $t1
-	j findMinOfMaxAndLast
+setSecondAsMedian:
+	move $t9, $t1
+	j print
 
-setMinOfMaxAndLast:
-	move $t7, $t2
-	j findMaxFinal
-
-setMaxFinal:
-	move $t7, $t0
+setThirdAsMedian:
+	move $t9, $t2
+	j print
 
 print:
 	# Print median
@@ -73,7 +79,7 @@ print:
 	syscall
 
 	li $v0, 1
-	move $a0, $t7
+	move $a0, $t9
 	syscall
 
 	li $v0, 4
