@@ -123,7 +123,7 @@ PrintReverse:
 
     jal PrintLoop
 
-    lw $ra, 0($sp)          # restore stack
+    lw $ra, 0($sp)          # restore return address
     addi $sp, $sp, 4
 
     jr      $ra
@@ -143,5 +143,8 @@ PrintLoop:
     addi $s1, $s1, -1       # decrement $s1 by 1
 
     bne $s1, $zero, PrintLoop   # if $s1 is not 0, loop again
+
+    lw $ra, 0($sp)          # restore return address
+    addi $sp, $sp, 4
 
     jr $ra                  # return to caller
