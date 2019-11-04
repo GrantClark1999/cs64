@@ -115,7 +115,33 @@ Exit:
 # COPYFROMHERE - DO NOT REMOVE THIS LINE
 
 PrintReverse:
-    #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
+    move $s0, $a0           # $s0 is the array stored in $a0
+    move $s1, $a1           # $s1 is the offset from $a0
 
-    # Do not remove this line
+    addi $sp, $sp, -4       # store return address to caller onto stack
+    sw $ra, 0($sp)
+
+    jal PrintLoop
+
+    lw $ra, 0($sp)          # restore stack
+    addi $sp, $sp, 4
+
     jr      $ra
+
+PrintLoop:
+    addi $s0, $s0, 4($s1)   # $t0 points to the last non-printed element of the array
+
+    li $v0, 1               # print last non-printed element of the array
+    move $a0, $s0
+    syscall
+
+    addi $sp, $sp, -4       # store return address to caller onto stack
+    sw $ra, 0($sp)
+
+    jal ConventionCheck
+
+    addi $s1, $s1, -1       # decrement $t1 by 1
+
+    bne $s1, $zero, PrintLoop   # if $t1 is not 0, loop again
+
+    jr $ra                  # return to caller
