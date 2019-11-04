@@ -3,7 +3,7 @@
 #
 #  Data Area - allocate and initialize variables
 .data
-	chooseInt: .asciiz "Choose an integer between 0 and 1000:\n"
+	chooseInt: .asciiz "Choose an integer number between 0 and 1000:\n"
 	helloWorld: .asciiz "Hello World!\n"
 	response1: .asciiz "User chose "
 	response2: .asciiz ". Truly a wise choice.\n"

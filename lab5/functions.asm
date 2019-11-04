@@ -129,10 +129,10 @@ PrintReverse:
     jr      $ra
 
 PrintLoop:
-    addi $s0, $s0, 4($s1)   # $t0 points to the last non-printed element of the array
+    add $t0, $s0, $s1
+    lw $a0, 0($t0)          # $a0 points to the last non-printed element of the array
 
     li $v0, 1               # print last non-printed element of the array
-    move $a0, $s0
     syscall
 
     addi $sp, $sp, -4       # store return address to caller onto stack
@@ -140,8 +140,8 @@ PrintLoop:
 
     jal ConventionCheck
 
-    addi $s1, $s1, -1       # decrement $t1 by 1
+    addi $s1, $s1, -1       # decrement $s1 by 1
 
-    bne $s1, $zero, PrintLoop   # if $t1 is not 0, loop again
+    bne $s1, $zero, PrintLoop   # if $s1 is not 0, loop again
 
     jr $ra                  # return to caller
