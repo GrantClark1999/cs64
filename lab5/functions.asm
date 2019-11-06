@@ -118,8 +118,7 @@ PrintReverse:
     addi $sp, $sp, -4
     sw $ra, 0($sp)
 
-    addi $a1, $a1, -1
-
+    addi $a1, $a1, -1       # make $a1 be the index = size - 1
     add $a1, $a1, $a1       # mutliply index by 4
     add $a1, $a1, $a1
 
@@ -148,7 +147,7 @@ PrintLoop:
     jal ConventionCheck
 
     addi $s1, $s1, -4       # decrement $s1 by 4
-    beq $s1, $zero, return  # if $s1 is 0, return from function
+    blt $s1, $zero, return  # if $s1 is less than 0, return from function
 
     move $a0, $s0
     move $a1, $s1
