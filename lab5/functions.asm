@@ -115,10 +115,7 @@ Exit:
 # COPYFROMHERE - DO NOT REMOVE THIS LINE
 
 PrintReverse:
-    move $s0, $a0           # $s0 is the array stored in $a0
-    move $s1, $a1           # $s1 is the offset from $a0
-
-    addi $sp, $sp, -4       # store return address to caller onto stack
+    addi $sp, $sp, -4
     sw $ra, 0($sp)
 
     jal PrintLoop
@@ -129,22 +126,33 @@ PrintReverse:
     jr      $ra
 
 PrintLoop:
+    addi $sp, $sp, -12
+    sw $ra, 8($sp)          # store return address to caller onto stack
+    sw $s0, 4($sp)
+    sw $s1, 0($sp)
+
+    move $s0, $a0
+    move $s1, $a1
+
     add $t0, $s0, $s1
     lw $a0, 0($t0)          # $a0 points to the last non-printed element of the array
 
     li $v0, 1               # print last non-printed element of the array
     syscall
 
-    addi $sp, $sp, -4       # store return address to caller onto stack
-    sw $ra, 0($sp)
-
     #jal ConventionCheck
 
     addi $s1, $s1, -1       # decrement $s1 by 1
+    beq $s1, $zero, return   # if $s1 is 0, return from function
 
-    bne $s1, $zero, PrintLoop   # if $s1 is not 0, loop again
+    move $a0, $s0
+    move $a1, $s1
+    jal PrintLoop           # else, print loop again, with new args
 
-    lw $ra, 0($sp)          # restore return address
-    addi $sp, $sp, 4
+return:
+    lw $s0, 0($sp)
+    lw $s1, 4($sp)
+    lw $ra, 8($sp)          # restore stack
+    addi $sp, $sp, 12
 
     jr $ra                  # return to caller
