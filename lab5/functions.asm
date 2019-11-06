@@ -123,7 +123,7 @@ PrintReverse:
     lw $ra, 0($sp)          # restore return address
     addi $sp, $sp, 4
 
-    jr      $ra
+    jr $ra
 
 PrintLoop:
     addi $sp, $sp, -12
@@ -134,7 +134,10 @@ PrintLoop:
     move $s0, $a0
     move $s1, $a1
 
-    add $t0, $s0, $s1
+    add $a1, $a1, $a1       # mutliply index by 4
+    add $a1, $a1, $a1
+
+    add $t0, $s0, $a1
     lw $a0, 0($t0)          # $a0 points to the last non-printed element of the array
 
     li $v0, 1               # print last non-printed element of the array
@@ -150,9 +153,9 @@ PrintLoop:
     jal PrintLoop           # else, print loop again, with new args
 
 return:
-    lw $s0, 0($sp)
+    lw $s0, 0($sp)          # restore stack
     lw $s1, 4($sp)
-    lw $ra, 8($sp)          # restore stack
+    lw $ra, 8($sp)          
     addi $sp, $sp, 12
 
     jr $ra                  # return to caller
