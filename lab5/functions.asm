@@ -137,7 +137,7 @@ PrintLoop:
     move $s0, $a0
     move $s1, $a1
 
-    add $t0, $s0, $a1
+    add $t0, $s0, $s1
     lw $a0, 0($t0)          # $a0 points to the last non-printed element of the array
 
     li $v0, 1               # print last non-printed element of the array
