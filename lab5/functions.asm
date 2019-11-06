@@ -138,7 +138,7 @@ PrintLoop:
     addi $sp, $sp, -4       # store return address to caller onto stack
     sw $ra, 0($sp)
 
-    jal ConventionCheck
+    #jal ConventionCheck
 
     addi $s1, $s1, -1       # decrement $s1 by 1
 
