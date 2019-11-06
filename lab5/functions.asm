@@ -118,6 +118,9 @@ PrintReverse:
     addi $sp, $sp, -4
     sw $ra, 0($sp)
 
+    add $a1, $a1, $a1       # mutliply index by 4
+    add $a1, $a1, $a1
+
     jal PrintLoop
 
     lw $ra, 0($sp)          # restore return address
@@ -134,9 +137,6 @@ PrintLoop:
     move $s0, $a0
     move $s1, $a1
 
-    add $a1, $a1, $a1       # mutliply index by 4
-    add $a1, $a1, $a1
-
     add $t0, $s0, $a1
     lw $a0, 0($t0)          # $a0 points to the last non-printed element of the array
 
@@ -145,8 +145,8 @@ PrintLoop:
 
     #jal ConventionCheck
 
-    addi $s1, $s1, -1       # decrement $s1 by 1
-    beq $s1, $zero, return   # if $s1 is 0, return from function
+    addi $s1, $s1, -4       # decrement $s1 by 4
+    beq $s1, $zero, return  # if $s1 is 0, return from function
 
     move $a0, $s0
     move $a1, $s1
