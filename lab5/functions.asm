@@ -118,6 +118,8 @@ PrintReverse:
     addi $sp, $sp, -4
     sw $ra, 0($sp)
 
+    addi $a1, $a1, -1
+
     add $a1, $a1, $a1       # mutliply index by 4
     add $a1, $a1, $a1
 
