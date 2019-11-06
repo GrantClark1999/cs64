@@ -143,7 +143,7 @@ PrintLoop:
     li $v0, 1               # print last non-printed element of the array
     syscall
 
-    #jal ConventionCheck
+    jal ConventionCheck
 
     addi $s1, $s1, -4       # decrement $s1 by 4
     beq $s1, $zero, return  # if $s1 is 0, return from function
