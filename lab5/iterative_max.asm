@@ -131,12 +131,12 @@ Loop:
     move $s1, $a1
 
     # If index = 0, stop looping and start printing
-    beq $s1, $zero, Print
+    beq $s1, $zero, BreakLoop
 
     addi $a1, $a1, -1
     jal Loop
-    
-Print:
+
+BreakLoop:
     move $s2, $v0
     sll $t1, $s1, 2
     add $t0, $s0, $t1
@@ -146,6 +146,7 @@ Print:
 
     move $s2, $t2
     
+Print:
     # Print Current Value
     li $v0, 1
     move $a0, $t2
