@@ -170,6 +170,7 @@ ReturnFirstElement:
     lw $s0, 0($sp)
     lw $s1, 4($sp)
     lw $s2, 8($sp)
-    addi $sp, $sp, 12
+    lw $ra, 12($sp)
+    addi $sp, $sp, 16
 
     jr $ra
