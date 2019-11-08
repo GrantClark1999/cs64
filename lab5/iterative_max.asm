@@ -139,6 +139,10 @@ Loop:
     move $s2, $v0
     sll $t1, $s1, 2
     add $t0, $s0, $t1
+
+    li $v0, 1
+    move $a0, $t0
+    syscall
     
     lw $t2, 0($t0)
     blt $t2, $s2, Print
