@@ -195,6 +195,8 @@ ReturnFirstElement:
     la $a0, newline
     syscall
 
+    jal ConventionCheck
+
     lw $v0, 0($s0)
 
     lw $s0, 0($sp)
