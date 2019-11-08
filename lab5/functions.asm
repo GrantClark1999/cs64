@@ -158,9 +158,9 @@ PrintLoop:
     jal PrintLoop           # else, print loop again, with new args
 
 Return:
-    lw $s0, 0($sp)          # restore stack
-    lw $s1, 4($sp)
-    lw $ra, 8($sp)          
+    lw $ra, 8($sp)          # restore stack
+    lw $s0, 4($sp)
+    lw $s1, 0($sp)          
     addi $sp, $sp, 12
 
     jr $ra                  # return to caller
