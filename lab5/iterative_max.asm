@@ -117,7 +117,7 @@ Exit:
 
 IterativeMax:
     # Make a1 the index rather than the size
-    addi $a1, $a1, -1
+    # addi $a1, $a1, -1
 
 Loop:
     # Allocate stack space and preserve registers.
