@@ -131,10 +131,10 @@ IterativeMax:
     jal IterativeMax
 
     move $s2, $v0
-    sll $t0, $s1, 2
-    add $t1, $s0, $t0
+    sll $t1, $s1, 2
+    add $t0, $s0, $t1
     
-    lw $t2, 0($t1)
+    lw $t2, 0($t0)
     blt $t2, $s2, Return
 
     move $s2, $t2
