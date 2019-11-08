@@ -119,8 +119,7 @@ PrintReverse:
     sw $ra, 0($sp)
 
     addi $a1, $a1, -1       # make $a1 be the index = size - 1
-    add $a1, $a1, $a1       # mutliply index by 4
-    add $a1, $a1, $a1
+    sll $a1, $a1, 2         # mutliply index by 4
 
     jal PrintLoop
 
