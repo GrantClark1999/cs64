@@ -115,6 +115,10 @@ Exit:
 # COPYFROMHERE - DO NOT REMOVE THIS LINE
 
 IterativeMax:
+    # Make a1 the index rather than the size
+    addi $a1, $a1, -1
+
+Loop:
     # Allocate stack space and preserve registers.
     addi $sp, $sp, -16
     sw $s0, 0($sp)
@@ -125,21 +129,22 @@ IterativeMax:
     move $s0, $a0
     move $s1, $a1
 
-    beq $a1, $zero, ReturnFirstElement
+    # If index = 0, stop looping and start printing
+    beq $s1, $zero, Print
 
     addi $a1, $a1, -1
-    jal IterativeMax
+    jal Loop
 
     move $s2, $v0
     sll $t1, $s1, 2
     add $t0, $s0, $t1
     
     lw $t2, 0($t0)
-    blt $t2, $s2, Return
+    blt $t2, $s2, Print
 
     move $s2, $t2
     
-Return:
+Print:
     # Print Current Value
     li $v0, 1
     move $a0, $t2
@@ -165,40 +170,12 @@ Return:
     # Make the return value of this function the current max.
     move $v0, $s2
 
-    # Restore stack
-    lw $s0, 0($sp)
-    lw $s1, 4($sp)
-    lw $s2, 8($sp)
-    lw $ra, 12($sp)
-    addi $sp, $sp, 16
-
-    jr $ra
-
-ReturnFirstElement:
-    # Print Current Value
-    li $v0, 1
-    move $a0, $t2
-    syscall
-
-    # Print New Line
-    li $v0, 4
-    la $a0, newline
-    syscall
-
-    # Print Current Max
-    li $v0, 1
-    move $a0, $s2
-    syscall
-
-    # Print New Line
-    li $v0, 4
-    la $a0, newline
-    syscall
-
-    jal ConventionCheck
-
+    # If index = 0, make max the first element.
+    bne $s1, $zero, Return
     lw $v0, 0($s0)
 
+Return:
+    # Restore stack
     lw $s0, 0($sp)
     lw $s1, 4($sp)
     lw $s2, 8($sp)
