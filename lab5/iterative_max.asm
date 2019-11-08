@@ -143,6 +143,9 @@ Loop:
     li $v0, 1
     move $a0, $t1
     syscall
+    li $v0, 4
+    la $a0, newline
+    syscall
     
     lw $t2, 0($t0)
     blt $t2, $s2, Print
