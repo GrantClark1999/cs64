@@ -145,9 +145,19 @@ Return:
     move $a0, $t2
     syscall
 
+    # Print New Line
+    li $v0, 4
+    la $a0, newline
+    syscall
+
     # Print Current Max
     li $v0, 1
     move $a0, $s2
+    syscall
+
+    # Print New Line
+    li $v0, 4
+    la $a0, newline
     syscall
 
     jal ConventionCheck
@@ -170,11 +180,21 @@ ReturnFirstElement:
     move $a0, $t2
     syscall
 
+    # Print New Line
+    li $v0, 4
+    la $a0, newline
+    syscall
+
     # Print Current Max
     li $v0, 1
     move $a0, $s2
     syscall
-    
+
+    # Print New Line
+    li $v0, 4
+    la $a0, newline
+    syscall
+
     lw $v0, 0($s0)
 
     lw $s0, 0($sp)
