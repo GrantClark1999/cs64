@@ -115,7 +115,61 @@ Exit:
 # COPYFROMHERE - DO NOT REMOVE THIS LINE
 
 IterativeMax:
-    #TODO: write your code here, $a0 stores the address of the array, $a1 stores the length of the array
+    # Allocate stack space and preserve registers.
+    addi $sp, $sp, -16
+    sw $s0, 0($sp)
+    sw $s1, 4($sp)
+    sw $s2, 8($sp)
+    sw $ra, 12($sp)
 
-    # Do not remove this line
-    jr      $ra
+    move $s0, $a0
+    move $s1, $a1
+
+    beq $a1, $zero, ReturnFirstElement
+
+    addi $a1, $a1, -1
+    jal IterativeMax
+
+    move $s2, $v0
+    sll $t0, $s1, 2
+    add $t1, $s0, $t0
+    
+    lw $t2, 0($t1)
+    blt $t2, $s2, Return
+
+    move $s2, $t2
+    
+Return:
+    # Print Current Value
+    li $v0, 1
+    move $a0, $t2
+    syscall
+
+    # Print Current Max
+    li $v0, 1
+    move $a0, $s2
+    syscall
+
+    jal ConventionCheck
+
+    # Make the return value of this function the current max.
+    move $v0, $s2
+
+    # Restore stack
+    lw $s0, 0($sp)
+    lw $s1, 4($sp)
+    lw $s2, 8($sp)
+    lw $ra, 12($sp)
+    addi $sp, $sp, 16
+
+    jr $ra
+
+ReturnFirstElement:
+    lw $v0, 0($s0)
+
+    lw $s0, 0($sp)
+    lw $s1, 4($sp)
+    lw $s2, 8($sp)
+    addi $sp, $sp, 12
+
+    jr $ra

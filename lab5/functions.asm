@@ -147,13 +147,13 @@ PrintLoop:
     jal ConventionCheck
 
     addi $s1, $s1, -4       # decrement $s1 by 4
-    blt $s1, $zero, return  # if $s1 is less than 0, return from function
+    blt $s1, $zero, Return  # if $s1 is less than 0, return from function
 
     move $a0, $s0
     move $a1, $s1
     jal PrintLoop           # else, print loop again, with new args
 
-return:
+Return:
     lw $s0, 0($sp)          # restore stack
     lw $s1, 4($sp)
     lw $ra, 8($sp)          
