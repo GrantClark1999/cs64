@@ -135,24 +135,17 @@ Loop:
 
     addi $a1, $a1, -1
     jal Loop
-
+    
+Print:
     move $s2, $v0
     sll $t1, $s1, 2
     add $t0, $s0, $t1
-
-    li $v0, 1
-    move $a0, $t1
-    syscall
-    li $v0, 4
-    la $a0, newline
-    syscall
     
     lw $t2, 0($t0)
     blt $t2, $s2, Print
 
     move $s2, $t2
     
-Print:
     # Print Current Value
     li $v0, 1
     move $a0, $t2
