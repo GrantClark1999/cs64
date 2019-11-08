@@ -143,6 +143,11 @@ PrintLoop:
     li $v0, 1               # print last non-printed element of the array
     syscall
 
+    # Print New Line
+    li $v0, 4
+    la $a0, newline
+    syscall
+
     jal ConventionCheck
 
     addi $s1, $s1, -4       # decrement $s1 by 4
