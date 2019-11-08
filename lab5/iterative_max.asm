@@ -117,7 +117,7 @@ Exit:
 
 IterativeMax:
     # Make a1 the index rather than the size
-    # addi $a1, $a1, -1
+    addi $a1, $a1, -1
 
 Loop:
     # Allocate stack space and preserve registers.
@@ -159,11 +159,6 @@ Print:
     # Print Current Max
     li $v0, 1
     move $a0, $s2
-    syscall
-
-    # Print New Line
-    li $v0, 4
-    la $a0, newline
     syscall
 
     jal ConventionCheck
