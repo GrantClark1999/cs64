@@ -16,7 +16,8 @@ convention:
     .asciiz "\nConvention Check\n"
 
 myArray:
-	.word 0 33 123 -66 332 -1 -223 453 9 45 -78 -14  
+	#.word 0 33 123 -66 332 -1 -223 453 9 45 -78 -14
+    .word 65 35 264 -243 265 1 0 -100 21 -3333 344 50  
 
 #Text Area (i.e. instructions)
 .text
