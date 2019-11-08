@@ -165,6 +165,16 @@ Return:
     jr $ra
 
 ReturnFirstElement:
+    # Print Current Value
+    li $v0, 1
+    move $a0, $t2
+    syscall
+
+    # Print Current Max
+    li $v0, 1
+    move $a0, $s2
+    syscall
+    
     lw $v0, 0($s0)
 
     lw $s0, 0($sp)
