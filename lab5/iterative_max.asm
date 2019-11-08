@@ -141,7 +141,7 @@ Loop:
     add $t0, $s0, $t1
 
     li $v0, 1
-    move $a0, $t0
+    move $a0, $t1
     syscall
     
     lw $t2, 0($t0)
